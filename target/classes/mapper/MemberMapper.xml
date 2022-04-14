@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+
+<mapper namespace="web.member.mapper.MemberMapper">	
+	<insert id="insert">
+		INSERT INTO MEMBER
+			(USERNAME,PASSWORD,NICKNAME,ROLE_ID)
+		VALUES
+		(#{username},#{password},#{nickname},#{roleId});
+	</insert>
+	
+	<delete id="deleteById">
+		DELETE FROM MEMBER
+			WHERE ID = #{id};
+	</delete>
+	
+	<update id="update">
+		UPDATE MEMBER SET
+		<if test = "password != 0 and password != ''">
+			PASSWORD = #{password},
+		</if>
+			NICKNAME = #{nickname},
+			PASS = #{pass},
+			ROLE_ID = #{roleId},
+			UPDATER = #{updater},
+			LAST_UPDATED_DATE = NOW()
+		WHERE USERNAME = #{username}
+	</update>
+	
+	<select id="selectById" resultType="Member">
+		SELECT * FROM MEMBER WHERE ID = #{id};
+	</select>
+	
+	<select id="selectAll"  resultType="Member"	>
+		SELECT * FROM MEMBER;
+	</select>
+	
+	<select id="selectByUsername" resultType="Member">
+		SELECT * FROM MEMBER WHERE USERNAME = #{username};
+	</select>
+	
+	<select id="selectForLogin" resultType="Member">
+		SELECT * FROM MEMBER WHERE USERNAME = #{username} AND PASSWORD = #{password};
+	</select>
+</mapper> 
